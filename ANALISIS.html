@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Analisis Gizi | Pulau Jawa - Statis Murni</title>
+    <title>Analisis Gizi | Pulau Jawa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:#f0f4f9; font-family:'Inter',sans-serif; scroll-behavior:smooth; }
-        .navbar { position: sticky; top:0; z-index:1000; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: linear-gradient(135deg, #0a2b4e 0%, #0f3b6f 100%); border-bottom: 4px solid #eab308; flex-wrap: wrap; gap:8px; }
+        /* NAVBAR (static) */
+        .navbar { position: sticky; top:0; z-index:999; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: linear-gradient(135deg, #0a2b4e 0%, #0f3b6f 100%); border-bottom: 4px solid #eab308; flex-wrap: wrap; gap:8px; }
         .logo-area { display: flex; align-items: center; gap:10px; }
         .logo-icon { background: rgba(255,255,255,0.2); padding:6px; border-radius:10px; font-size:1rem; }
         .logo-text h1 { color:white; font-size:1.3rem; font-weight:800; margin:0; }
@@ -20,7 +21,9 @@
         .nav-link i { font-size:0.8rem; }
         .nav-link:hover { background:rgba(255,255,255,0.12); transform:translateY(-1px); color:white; }
         .nav-link.active { background:rgba(234,179,8,0.2); color:#facc15; }
+        /* LAYOUT */
         .main-container { max-width:1280px; margin:0 auto; padding:30px 20px; display:flex; gap:25px; align-items:flex-start; }
+        /* SIDEBAR (desktop) */
         .sidebar-card { background:white; border-radius:1.25rem; box-shadow:0 8px 24px rgba(0,0,0,0.05); padding:1.25rem; position:sticky; top:90px; flex:0 0 270px; align-self:flex-start; }
         .menu-item { display:flex; align-items:center; gap:12px; padding:0.65rem 1rem; margin-bottom:0.5rem; border-radius:0.75rem; text-decoration:none; color:#1e293b; font-weight:500; transition:all 0.2s; white-space:nowrap; }
         .menu-item i { width:24px; font-size:1.1rem; color:#3b82f6; text-align:center; }
@@ -29,6 +32,7 @@
         .menu-item.active i { color:white; }
         .sidebar-card hr { margin:1rem 0; border-color:#e9eef3; }
         .sidebar-card .small { font-size:0.75rem; color:#475569; }
+        /* CONTENT */
         .content-area { flex:1; min-width:0; }
         .hero { background: linear-gradient(135deg, #0a2b4e, #1e40af); color: white; padding: 40px 25px; border-radius: 20px; margin-bottom: 25px; }
         .hero h1 { font-size: 2rem; line-height:1.3; margin-bottom: 12px; font-weight:700; }
@@ -50,38 +54,55 @@
         .plot-img:hover { transform:scale(1.01); }
         footer { background:white; border-top:1px solid #dee2e6; text-align:center; padding:0.8rem; margin-top:2rem; font-size:0.75rem; color:#64748b; }
         section { scroll-margin-top: 95px; }
-        /* ACCORDION CUSTOM */
+        /* ACCORDION */
         .accordion-button:not(.collapsed) { background-color: #eef2ff; color: #1e40af; font-weight: 600; }
         .accordion-button:focus { box-shadow: none; border-color: #dee2e6; }
-        /* GAMBAR STATIS CHART */
+        /* gambar statis chart */
         .static-chart { width: 100%; height: auto; border-radius: 12px; background: #f8fafc; border: 1px solid #dee2e6; padding: 8px; margin-bottom: 8px; }
         .keterangan-gizi { font-size: 0.95rem; margin-bottom: 10px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
         .keterangan-gizi i { width: 24px; font-size: 1.1rem; text-align: center; }
-
-        @media (max-width: 900px) {
+        /* RESPONSIF: SIDEBAR MENJADI HORIZONTAL DI MOBILE */
+        @media (max-width: 768px) {
             .main-container { flex-direction: column; padding: 15px 12px; gap: 12px; }
-            .sidebar-card { position: sticky; top: 70px; width: 100%; padding: 0.5rem; background: white; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 12px; display: flex; flex-direction: row; overflow-x: auto; gap: 6px; white-space: nowrap; scrollbar-width: thin; align-items: center; }
+            .sidebar-card {
+                position: relative;
+                top: 0;
+                width: 100%;
+                padding: 0.5rem;
+                border-radius: 30px;
+                overflow-x: auto;
+                white-space: nowrap;
+                display: flex;
+                flex-direction: row;
+                gap: 6px;
+                align-items: center;
+                scrollbar-width: thin;
+            }
             .sidebar-card .text-uppercase, .sidebar-card hr, .sidebar-card .small { display: none; }
-            .menu-item { display: inline-flex; margin-bottom: 0; padding: 0.3rem 0.8rem; white-space: nowrap; gap: 6px; font-size: 0.75rem; background: #f8fafc; border-radius: 30px; transition: 0.2s; }
-            .menu-item i { width: 16px; font-size: 0.75rem; margin-right: 0; }
-            .menu-item:hover { background-color: #eef2ff; transform: translateY(-1px); }
-            section { scroll-margin-top: 140px; }
+            .menu-item {
+                display: inline-flex;
+                margin-bottom: 0;
+                padding: 0.3rem 0.8rem;
+                font-size: 0.75rem;
+                background: #f8fafc;
+                border-radius: 30px;
+                white-space: nowrap;
+            }
+            .menu-item i { width: 16px; font-size: 0.75rem; }
+            section { scroll-margin-top: 100px; }
+            .hero h1 { font-size: 1.5rem; }
         }
         @media (max-width: 576px) {
             .hero h1 { font-size: 1.5rem; }
-            .card h2 { font-size: 1.2rem; }
             .navbar { padding: 8px 12px; }
             .logo-text h1 { font-size: 1rem; }
-            .menu-item { padding: 0.25rem 0.7rem; font-size: 0.7rem; }
-            .menu-item i { font-size: 0.7rem; width: 14px; }
-            section { scroll-margin-top: 130px; }
+            .nav-link { padding: 4px 8px; font-size: 0.7rem; }
         }
-        @media (max-width:768px) { .navbar { flex-direction:column; align-items:flex-start; } .hero h1 { font-size:30px; } }
-        @media (max-width:480px) { .hero h1 { font-size:24px; } .nav-link { padding:6px 12px; font-size:0.8rem; } }
     </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar">
     <div class="logo-area">
         <div class="logo-icon"><i class="fas fa-chart-line"></i></div>
@@ -94,6 +115,7 @@
 </nav>
 
 <div class="main-container">
+    <!-- SIDEBAR: di desktop vertikal, di mobile horizontal -->
     <aside class="sidebar-card">
         <div class="text-uppercase small fw-bold text-secondary mb-2">Menu Navigasi</div>
         <div class="mt-2">
@@ -106,6 +128,7 @@
     </aside>
 
     <div class="content-area">
+        <!-- HERO -->
         <section id="hero">
             <div class="hero">
                 <h1>Seperti Apa Status Gizi Masyarakat di Pulau Jawa?</h1>
@@ -113,6 +136,7 @@
             </div>
         </section>
 
+        <!-- RINGKASAN KESELURUHAN -->
         <section id="keseluruhan">
             <div class="card">
                 <h2><i class="fas fa-chart-pie"></i> Ringkasan Gizi Pulau Jawa</h2>
@@ -123,17 +147,17 @@
                 </div>
                 <h3 class="h6 fw-bold mt-3">Grafik Bar Kalori & Protein per Provinsi (2023–2025)</h3>
                 <div class="row g-4 mt-2">
-                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center"><i class="fas fa-fire text-danger"></i> Asupan Kalori (kkal/hari)</h5><img src="kalori2023-2025.jpeg" alt="Bar chart kalori" class="plot-img" onerror="this.src='https://placehold.co/600x400/f0f4f9/1e40af?text=Bar+Chart+Kalori'"><p class="small text-center text-muted mt-2">Sumber: BPS 2023-2025</p></div></div>
-                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center"><i class="fas fa-egg text-primary"></i> Asupan Protein (gram/hari)</h5><img src="protein2023-2025.jpeg" alt="Bar chart protein" class="plot-img" onerror="this.src='https://placehold.co/600x400/f0f4f9/1e40af?text=Bar+Chart+Protein'"><p class="small text-center text-muted mt-2">Sumber: BPS 2023-2025</p></div></div>
+                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center"><i class="fas fa-fire text-danger"></i> Asupan Kalori (kkal/hari)</h5><img src="kalori2023-2025.jpeg" class="plot-img" onerror="this.src='https://placehold.co/600x400/f0f4f9/1e40af?text=Bar+Chart+Kalori'"><p class="small text-center text-muted mt-2">Sumber: BPS 2023-2025</p></div></div>
+                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center"><i class="fas fa-egg text-primary"></i> Asupan Protein (gram/hari)</h5><img src="protein2023-2025.jpeg" class="plot-img" onerror="this.src='https://placehold.co/600x400/f0f4f9/1e40af?text=Bar+Chart+Protein'"><p class="small text-center text-muted mt-2">Sumber: BPS 2023-2025</p></div></div>
                 </div>
             </div>
         </section>
 
-        <!-- PER PROVINSI DENGAN ACCORDION -->
+        <!-- PER PROVINSI (ACCORDION) 6 PROVINSI LENGKAP -->
         <section id="perprovinsi">
             <div class="card">
                 <h2><i class="fas fa-city"></i> Analisis Per Provinsi</h2>
-                <p class="desc mb-3">Klik pada setiap provinsi untuk melihat <italic>linechart</italic> konsumsi (2023-2025) dan proporsi IMT.</p>
+                <p class="desc mb-3">Klik pada setiap provinsi untuk melihat linechart konsumsi (2023-2025) dan proporsi IMT.</p>
                 <div class="accordion" id="accordionProvinsi">
                     <!-- DKI Jakarta -->
                     <div class="accordion-item">
@@ -164,7 +188,7 @@
                                     <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 51,7%</div>
                                     <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 14,1%</div>
                                     <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 25,7%</div>
-                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                    <p class="small text-muted mt-2">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
                                 </div></div>
                             </div>
                         </div>
@@ -181,7 +205,7 @@
                                     <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 54,9%</div>
                                     <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 13,5%</div>
                                     <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 22,5%</div>
-                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                    <p class="small text-muted mt-2">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
                                 </div></div>
                             </div>
                         </div>
@@ -198,7 +222,7 @@
                                     <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 51,7%</div>
                                     <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 14,4%</div>
                                     <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 24,6%</div>
-                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                    <p class="small text-muted mt-2">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
                                 </div></div>
                             </div>
                         </div>
@@ -215,7 +239,7 @@
                                     <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 52,9%</div>
                                     <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 14,8%</div>
                                     <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 24,4%</div>
-                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                    <p class="small text-muted mt-2">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
                                 </div></div>
                             </div>
                         </div>
@@ -232,7 +256,7 @@
                                     <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 54,9%</div>
                                     <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 13,3%</div>
                                     <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 23,6%</div>
-                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                    <p class="small text-muted mt-2">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
                                 </div></div>
                             </div>
                         </div>
@@ -241,22 +265,20 @@
             </div>
         </section>
 
-        <!-- RANKING & REKOMENDASI -->
+        <!-- RANKING -->
         <section id="ranking">
             <div class="card">
                 <h2><i class="fas fa-trophy"></i> Peringkat Keseimbangan Gizi</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                            <tr><th>Peringkat</th><th>Provinsi</th><th>Skor Gizi</th><th>Kalori (2025)</th><th>Protein (2025)</th><th>% Gizi Normal</th><th>Saran</th></tr>
-                        </thead>
+                        <thead class="table-dark"><tr><th>Peringkat</th><th>Provinsi</th><th>Skor Gizi</th><th>Kalori (2025)</th><th>Protein (2025)</th><th>% Gizi Normal</th><th>Saran</th></tr></thead>
                         <tbody>
-                            <tr><td>1</td><td>Jawa Tengah</td><td>40.95</td><td>2030</td><td>60.2</td><td>54.9%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
-                            <tr><td>2</td><td>Banten</td><td>40.64</td><td>2140</td><td>65.0</td><td>54.9%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
-                            <tr><td>3</td><td>Jawa Timur</td><td>38.33</td><td>2090</td><td>62.0</td><td>52.9%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
-                            <tr><td>4</td><td>DI Yogyakarta</td><td>36.61</td><td>2050</td><td>64.8</td><td>51.7%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
-                            <tr><td>5</td><td>Jawa Barat</td><td>36.27</td><td>2080</td><td>63.5</td><td>51.7%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
-                            <tr><td>6</td><td>DKI Jakarta</td><td>27.78</td><td>2080</td><td>68.0</td><td>45.6%</td><td>Perbaiki kualitas protein (sumber hewani).</td></tr>
+                            <tr><td>1</td><td>Jawa Tengah</td><td>40.95</td><td>2030</td><td>60.2</td><td>54.9%</td><td>Status gizi cukup baik</td></tr>
+                            <tr><td>2</td><td>Banten</td><td>40.64</td><td>2140</td><td>65.0</td><td>54.9%</td><td>Status gizi cukup baik</td></tr>
+                            <tr><td>3</td><td>Jawa Timur</td><td>38.33</td><td>2090</td><td>62.0</td><td>52.9%</td><td>Status gizi cukup baik</td></tr>
+                            <tr><td>4</td><td>DI Yogyakarta</td><td>36.61</td><td>2050</td><td>64.8</td><td>51.7%</td><td>Status gizi cukup baik</td></tr>
+                            <tr><td>5</td><td>Jawa Barat</td><td>36.27</td><td>2080</td><td>63.5</td><td>51.7%</td><td>Status gizi cukup baik</td></tr>
+                            <tr><td>6</td><td>DKI Jakarta</td><td>27.78</td><td>2080</td><td>68.0</td><td>45.6%</td><td>Perbaiki kualitas protein</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -272,7 +294,6 @@
     </div>
 </div>
 <footer><small>© 2026 - Pemrograman Web 2B Kelompok 8 | Data BPS & Kemenkes</small></footer>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Active menu highlight
