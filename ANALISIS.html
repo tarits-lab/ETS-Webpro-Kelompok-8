@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Analisis Gizi | Pulau Jawa</title>
+    <title>Analisis Gizi | Pulau Jawa - Statis Murni</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:#f0f4f9; font-family:'Inter',sans-serif; scroll-behavior:smooth; }
@@ -51,11 +50,14 @@
         .plot-img:hover { transform:scale(1.01); }
         footer { background:white; border-top:1px solid #dee2e6; text-align:center; padding:0.8rem; margin-top:2rem; font-size:0.75rem; color:#64748b; }
         section { scroll-margin-top: 95px; }
+        /* ACCORDION CUSTOM */
         .accordion-button:not(.collapsed) { background-color: #eef2ff; color: #1e40af; font-weight: 600; }
         .accordion-button:focus { box-shadow: none; border-color: #dee2e6; }
-        .accordion-body h5 { font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.8rem; }
-        canvas { max-width: 100%; height: auto; display: block; margin: 0 auto; background: white; border-radius: 8px; padding: 5px; }
-        .legend-color { display: inline-block; width: 16px; height: 16px; border-radius: 50%; margin-right: 6px; }
+        /* GAMBAR STATIS CHART */
+        .static-chart { width: 100%; height: auto; border-radius: 12px; background: #f8fafc; border: 1px solid #dee2e6; padding: 8px; margin-bottom: 8px; }
+        .keterangan-gizi { font-size: 0.95rem; margin-bottom: 10px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .keterangan-gizi i { width: 24px; font-size: 1.1rem; text-align: center; }
+
         @media (max-width: 900px) {
             .main-container { flex-direction: column; padding: 15px 12px; gap: 12px; }
             .sidebar-card { position: sticky; top: 70px; width: 100%; padding: 0.5rem; background: white; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 12px; display: flex; flex-direction: row; overflow-x: auto; gap: 6px; white-space: nowrap; scrollbar-width: thin; align-items: center; }
@@ -127,75 +129,111 @@
             </div>
         </section>
 
-        <!-- ========== BAGIAN PER PROVINSI DENGAN LINE CHART & DOUGHNUT CHART 4 KATEGORI ========== -->
+        <!-- PER PROVINSI DENGAN ACCORDION -->
         <section id="perprovinsi">
             <div class="card">
                 <h2><i class="fas fa-city"></i> Analisis Per Provinsi</h2>
-                <p class="desc mb-3">Klik pada setiap provinsi untuk melihat tren konsumsi (2023-2025) dan proporsi IMT berdasarkan SKI 2023.</p>
+                <p class="desc mb-3">Klik pada setiap provinsi untuk melihat <italic>linechart</italic> konsumsi (2023-2025) dan proporsi IMT.</p>
                 <div class="accordion" id="accordionProvinsi">
                     <!-- DKI Jakarta -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov1"><i class="fas fa-map-marker-alt me-2 text-primary"></i> DKI Jakarta</button></h2>
-                        <div id="prov1" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDKI">DKI Jakarta</button></h2>
+                        <div id="collapseDKI" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="row"><div class="col-md-6"><canvas id="lineKalori1" style="width:100%; height:200px"></canvas></div><div class="col-md-6"><canvas id="lineProtein1" style="width:100%; height:200px"></canvas></div></div>
-                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut1" style="width:100%; height:200px"></canvas></div><div class="col-md-7">
-                                    <p><span class="legend-color" style="background:#f97316;"></span> Wasting: 6,4%</p>
-                                    <p><span class="legend-color" style="background:#16a34a;"></span> Normal: 45,6%</p>
-                                    <p><span class="legend-color" style="background:#eab308;"></span> Overweight: 16,2%</p>
-                                    <p><span class="legend-color" style="background:#dc2626;"></span> Obesitas: 31,8%</p>
-                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                <div class="row"><div class="col-md-6"><img src="kalorijakarta.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/f97316?text=Line+Kalori+DKI'"><p class="small text-muted">Konsumsi Kalori DKI Jakarta 2023-2025</p></div><div class="col-md-6"><img src="proteinjakarta.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/1e3a8a?text=Line+Protein+DKI'"><p class="small text-muted">Konsumsi Protein DKI Jakarta 2023-2025</p></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><img src="imtjakarta.png" class="static-chart" onerror="this.src='https://placehold.co/400x400/f0f4f9/dc2626?text=Doughnut+DKI'"><p class="small text-muted">Proporsi IMT DKI Jakarta</p></div>
+                                <div class="col-md-7">
+                                    <div class="keterangan-gizi" style="color:#f97316;"><i class="fas fa-exclamation-triangle"></i> Wasting: 6,4%</div>
+                                    <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 45,6%</div>
+                                    <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 16,2%</div>
+                                    <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 31,8%</div>
+                                    <p class="small text-muted mt-2">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
                                 </div></div>
                             </div>
                         </div>
                     </div>
                     <!-- Jawa Barat -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov2"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Jawa Barat</button></h2>
-                        <div id="prov2" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJabar">Jawa Barat</button></h2>
+                        <div id="collapseJabar" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="row"><div class="col-md-6"><canvas id="lineKalori2"></canvas></div><div class="col-md-6"><canvas id="lineProtein2"></canvas></div></div>
-                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut2"></canvas></div><div class="col-md-7"><p>Wasting: 8,6%</p><p>Normal: 51,7%</p><p>Overweight: 14,1%</p><p>Obesitas: 25,7%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                                <div class="row"><div class="col-md-6"><img src="kalorijabar.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/f97316?text=Line+Kalori+Jabar'"><p class="small text-muted">Konsumsi Kalori Jawa Barat 2023-2025</p></div><div class="col-md-6"><img src="proteinjabar.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/1e3a8a?text=Line+Protein+Jabar'"><p class="small text-muted">Konsumsi Protein Jawa Barat 2023-2025</p></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><img src="imtjabar.png" class="static-chart" onerror="this.src='https://placehold.co/400x400/f0f4f9/dc2626?text=Doughnut+Jabar'"><p class="small text-muted">Proporsi IMT Jawa Barat</p></div>
+                                <div class="col-md-7">
+                                    <div class="keterangan-gizi" style="color:#f97316;"><i class="fas fa-exclamation-triangle"></i> Wasting: 8,6%</div>
+                                    <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 51,7%</div>
+                                    <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 14,1%</div>
+                                    <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 25,7%</div>
+                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                </div></div>
                             </div>
                         </div>
                     </div>
                     <!-- Jawa Tengah -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov3"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Jawa Tengah</button></h2>
-                        <div id="prov3" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJateng">Jawa Tengah</button></h2>
+                        <div id="collapseJateng" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="row"><div class="col-md-6"><canvas id="lineKalori3"></canvas></div><div class="col-md-6"><canvas id="lineProtein3"></canvas></div></div>
-                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut3"></canvas></div><div class="col-md-7"><p>Wasting: 9,0%</p><p>Normal: 54,9%</p><p>Overweight: 13,5%</p><p>Obesitas: 22,5%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                                <div class="row"><div class="col-md-6"><img src="kalorijateng.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/f97316?text=Line+Kalori+Jateng'"><p class="small text-muted">Konsumsi Kalori Jawa Tengah 2023-2025</p></div><div class="col-md-6"><img src="proteinjateng.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/1e3a8a?text=Line+Protein+Jateng'"><p class="small text-muted">Konsumsi Protein Jawa Tengah 2023-2025</p></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><img src="imtjateng.png" class="static-chart" onerror="this.src='https://placehold.co/400x400/f0f4f9/dc2626?text=Doughnut+Jateng'"><p class="small text-muted">Proporsi IMT Jawa Tengah</p></div>
+                                <div class="col-md-7">
+                                    <div class="keterangan-gizi" style="color:#f97316;"><i class="fas fa-exclamation-triangle"></i> Wasting: 9,0%</div>
+                                    <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 54,9%</div>
+                                    <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 13,5%</div>
+                                    <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 22,5%</div>
+                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                </div></div>
                             </div>
                         </div>
                     </div>
                     <!-- DI Yogyakarta -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov4"><i class="fas fa-map-marker-alt me-2 text-primary"></i> DI Yogyakarta</button></h2>
-                        <div id="prov4" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDIY">DI Yogyakarta</button></h2>
+                        <div id="collapseDIY" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="row"><div class="col-md-6"><canvas id="lineKalori4"></canvas></div><div class="col-md-6"><canvas id="lineProtein4"></canvas></div></div>
-                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut4"></canvas></div><div class="col-md-7"><p>Wasting: 9,3%</p><p>Normal: 51,7%</p><p>Overweight: 14,4%</p><p>Obesitas: 24,6%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                                <div class="row"><div class="col-md-6"><img src="kalorijogja.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/f97316?text=Line+Kalori+DIY'"><p class="small text-muted">Konsumsi Kalori DI Yogyakarta 2023-2025</p></div><div class="col-md-6"><img src="proteinjogja.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/1e3a8a?text=Line+Protein+DIY'"><p class="small text-muted">Konsumsi Protein DI Yogyakarta 2023-2025</p></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><img src="imtjogja.png" class="static-chart" onerror="this.src='https://placehold.co/400x400/f0f4f9/dc2626?text=Doughnut+DIY'"><p class="small text-muted">Proporsi IMT DI Yogyakarta</p></div>
+                                <div class="col-md-7">
+                                    <div class="keterangan-gizi" style="color:#f97316;"><i class="fas fa-exclamation-triangle"></i> Wasting: 9,3%</div>
+                                    <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 51,7%</div>
+                                    <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 14,4%</div>
+                                    <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 24,6%</div>
+                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                </div></div>
                             </div>
                         </div>
                     </div>
                     <!-- Jawa Timur -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov5"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Jawa Timur</button></h2>
-                        <div id="prov5" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJatim">Jawa Timur</button></h2>
+                        <div id="collapseJatim" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="row"><div class="col-md-6"><canvas id="lineKalori5"></canvas></div><div class="col-md-6"><canvas id="lineProtein5"></canvas></div></div>
-                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut5"></canvas></div><div class="col-md-7"><p>Wasting: 7,9%</p><p>Normal: 52,9%</p><p>Overweight: 14,8%</p><p>Obesitas: 24,4%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                                <div class="row"><div class="col-md-6"><img src="kalorijatim.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/f97316?text=Line+Kalori+Jatim'"><p class="small text-muted">Konsumsi Kalori Jawa Timur 2023-2025</p></div><div class="col-md-6"><img src="proteinjatim.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/1e3a8a?text=Line+Protein+Jatim'"><p class="small text-muted">Konsumsi Protein Jawa Timur 2023-2025</p></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><img src="imtjatim.png" class="static-chart" onerror="this.src='https://placehold.co/400x400/f0f4f9/dc2626?text=Doughnut+Jatim'"><p class="small text-muted">Proporsi IMT Jawa Timur</p></div>
+                                <div class="col-md-7">
+                                    <div class="keterangan-gizi" style="color:#f97316;"><i class="fas fa-exclamation-triangle"></i> Wasting: 7,9%</div>
+                                    <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 52,9%</div>
+                                    <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 14,8%</div>
+                                    <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 24,4%</div>
+                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                </div></div>
                             </div>
                         </div>
                     </div>
                     <!-- Banten -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov6"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Banten</button></h2>
-                        <div id="prov6" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBanten">Banten</button></h2>
+                        <div id="collapseBanten" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                <div class="row"><div class="col-md-6"><canvas id="lineKalori6"></canvas></div><div class="col-md-6"><canvas id="lineProtein6"></canvas></div></div>
-                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut6"></canvas></div><div class="col-md-7"><p>Wasting: 8,2%</p><p>Normal: 54,9%</p><p>Overweight: 13,3%</p><p>Obesitas: 23,6%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                                <div class="row"><div class="col-md-6"><img src="kaloribanten.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/f97316?text=Line+Kalori+Banten'"><p class="small text-muted">Konsumsi Kalori Banten 2023-2025</p></div><div class="col-md-6"><img src="proteinbanten.png" class="static-chart" onerror="this.src='https://placehold.co/600x300/f0f4f9/1e3a8a?text=Line+Protein+Banten'"><p class="small text-muted">Konsumsi Protein Banten 2023-2025</p></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><img src="imtbanten.png" class="static-chart" onerror="this.src='https://placehold.co/400x400/f0f4f9/dc2626?text=Doughnut+Banten'"><p class="small text-muted">Proporsi IMT Banten</p></div>
+                                <div class="col-md-7">
+                                    <div class="keterangan-gizi" style="color:#f97316;"><i class="fas fa-exclamation-triangle"></i> Wasting: 8,2%</div>
+                                    <div class="keterangan-gizi" style="color:#16a34a;"><i class="fas fa-check-circle"></i> Normal: 54,9%</div>
+                                    <div class="keterangan-gizi" style="color:#eab308;"><i class="fas fa-chart-line"></i> Overweight: 13,3%</div>
+                                    <div class="keterangan-gizi" style="color:#dc2626;"><i class="fas fa-utensils"></i> Obesitas: 23,6%</div>
+                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                </div></div>
                             </div>
                         </div>
                     </div>
@@ -203,24 +241,33 @@
             </div>
         </section>
 
-        <!-- Ranking & Rekomendasi (dihitung ulang) -->
+        <!-- RANKING & REKOMENDASI -->
         <section id="ranking">
             <div class="card">
                 <h2><i class="fas fa-trophy"></i> Peringkat Keseimbangan Gizi</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
-                        <thead class="table-dark"><tr><th>Peringkat</th><th>Provinsi</th><th>Skor Gizi</th><th>Kalori (2025)</th><th>Protein (2025)</th><th>% Gizi Normal</th><th>Saran</th></tr></thead>
-                        <tbody id="rankingBody"></tbody>
+                        <thead class="table-dark">
+                            <tr><th>Peringkat</th><th>Provinsi</th><th>Skor Gizi</th><th>Kalori (2025)</th><th>Protein (2025)</th><th>% Gizi Normal</th><th>Saran</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>Jawa Tengah</td><td>40.95</td><td>2030</td><td>60.2</td><td>54.9%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
+                            <tr><td>2</td><td>Banten</td><td>40.64</td><td>2140</td><td>65.0</td><td>54.9%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
+                            <tr><td>3</td><td>Jawa Timur</td><td>38.33</td><td>2090</td><td>62.0</td><td>52.9%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
+                            <tr><td>4</td><td>DI Yogyakarta</td><td>36.61</td><td>2050</td><td>64.8</td><td>51.7%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
+                            <tr><td>5</td><td>Jawa Barat</td><td>36.27</td><td>2080</td><td>63.5</td><td>51.7%</td><td>Status gizi cukup baik, pertahankan edukasi pola makan seimbang.</td></tr>
+                            <tr><td>6</td><td>DKI Jakarta</td><td>27.78</td><td>2080</td><td>68.0</td><td>45.6%</td><td>Perbaiki kualitas protein (sumber hewani).</td></tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class="bg-light p-3 rounded-3 mt-3">
-                    <h6><i class="fas fa-flag-checkered text-primary"></i> Kesimpulan & Rekomendasi</h6>
-                    <p>Skor dihitung berdasarkan persentase Normal dikurangi bobot Wasting dan Obesitas. Provinsi dengan skor rendah perlu intervensi prioritas.</p>
+                    <h6><i class="fas fa-flag-checkered text-primary"></i> Catatan</h6>
+                    <p>Skor = % Normal - (Wasting×0.3 + Obesitas×0.5). Data IMT dari SKI 2023 Kemenkes. Kalori & protein 2025 bersumber dari BPS.</p>
                 </div>
             </div>
         </section>
         <div class="next-page text-center mt-3">
-            <a href="index.html" class="btn-bottom"><i class="fas fa-home"></i> Kembali ke Homepage</a>
+            <a href="index.html" class="btn-bottom">Kembali ke Homepage</a>
         </div>
     </div>
 </div>
@@ -228,92 +275,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Data Kalori & Protein per provinsi (2023,2024,2025) dari gambar user
-    const provData = [
-        { name:"DKI Jakarta", kalori:[2150,2050,2080], protein:[70.0,68.0,68.0] },
-        { name:"Jawa Barat",  kalori:[2110,2070,2080], protein:[63.0,62.0,63.5] },
-        { name:"Jawa Tengah", kalori:[2040,1980,2030], protein:[59.8,59.5,60.2] },
-        { name:"DI Yogyakarta",kalori:[2060,2010,2050], protein:[63.5,62.5,64.8] },
-        { name:"Jawa Timur",  kalori:[2060,2050,2090], protein:[60.5,60.5,62.0] },
-        { name:"Banten",      kalori:[2210,2180,2140], protein:[67.0,66.0,65.0] }
-    ];
-    // Data IMT 4 kategori (Wasting, Normal, Overweight, Obesitas) dari SKI 2023
-    const imtData = [
-        { wasting:6.4, normal:45.6, overweight:16.2, obesitas:31.8 },
-        { wasting:8.6, normal:51.7, overweight:14.1, obesitas:25.7 },
-        { wasting:9.0, normal:54.9, overweight:13.5, obesitas:22.5 },
-        { wasting:9.3, normal:51.7, overweight:14.4, obesitas:24.6 },
-        { wasting:7.9, normal:52.9, overweight:14.8, obesitas:24.4 },
-        { wasting:8.2, normal:54.9, overweight:13.3, obesitas:23.6 }
-    ];
-    const tahun = ['2023','2024','2025'];
-
-    // Fungsi line chart
-    function buatLineChart(id, data, label, warna) {
-        let ctx = document.getElementById(id);
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'line',
-            data: { labels: tahun, datasets: [{ label: label, data: data, borderColor: warna, backgroundColor: 'rgba(59,130,246,0.1)', tension: 0.2, fill: true, pointBackgroundColor: warna }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top' } } }
-        });
-    }
-    // Fungsi doughnut chart 4 kategori
-    function buatDoughnutChart(id, wasting, normal, overweight, obesitas) {
-        let ctx = document.getElementById(id);
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: { labels: ['Wasting', 'Normal', 'Overweight', 'Obesitas'], datasets: [{ data: [wasting, normal, overweight, obesitas], backgroundColor: ['#f97316', '#16a34a', '#eab308', '#dc2626'], borderWidth: 0 }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 9 } } } } }
-        });
-    }
-
-    // Inisialisasi semua chart
-    for (let i=0; i<provData.length; i++) {
-        let idx = i+1;
-        buatLineChart(`lineKalori${idx}`, provData[i].kalori, 'Kalori (kkal)', '#f97316');
-        buatLineChart(`lineProtein${idx}`, provData[i].protein, 'Protein (gram)', '#1e3a8a');
-        buatDoughnutChart(`doughnut${idx}`, imtData[i].wasting, imtData[i].normal, imtData[i].overweight, imtData[i].obesitas);
-    }
-
-    // Hitung ranking berdasarkan skor IMT (normal - (wasting*0.3 + obesitas*0.5))
-    let rankingList = [];
-    for (let i=0; i<provData.length; i++) {
-        let skor = imtData[i].normal - (imtData[i].wasting * 0.3 + imtData[i].obesitas * 0.5);
-        rankingList.push({
-            provinsi: provData[i].name,
-            skor: skor,
-            normal: imtData[i].normal,
-            kalori2025: provData[i].kalori[2],
-            protein2025: provData[i].protein[2],
-            wasting: imtData[i].wasting,
-            obesitas: imtData[i].obesitas
-        });
-    }
-    rankingList.sort((a,b) => b.skor - a.skor);
-    let tbody = '';
-    for (let i=0; i<rankingList.length; i++) {
-        let r = rankingList[i];
-        let saran = "";
-        if (r.normal >= 54) saran = "Status gizi cukup baik, pertahankan edukasi pola makan seimbang.";
-        else if (r.wasting > 9) saran = "Prioritas intervensi gizi buruk (wasting tinggi).";
-        else if (r.obesitas > 25) saran = "Kampanye pengendalian obesitas dan aktivitas fisik.";
-        else if (r.kalori2025 < 2000) saran = "Tingkatkan asupan energi dan protein hewani.";
-        else if (r.protein2025 < 62) saran = "Perbaiki kualitas protein (sumber hewani).";
-        else saran = "Monitoring rutin dan promosi Isi Piringku.";
-        tbody += `<tr>
-            <td>${i+1}</td>
-            <td>${r.provinsi}</td>
-            <td>${r.skor.toFixed(1)}</td>
-            <td>${r.kalori2025}</td>
-            <td>${r.protein2025}</td>
-            <td>${r.normal}%</td>
-            <td>${saran}</td>
-        </tr>`;
-    }
-    document.getElementById('rankingBody').innerHTML = tbody;
-
     // Active menu highlight
     const sections = document.querySelectorAll('section');
     const menuItems = document.querySelectorAll('.menu-item');
