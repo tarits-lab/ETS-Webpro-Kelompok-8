@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -102,7 +103,8 @@
         .summary-item:hover { transform:translateY(-4px); background:#e0f2fe; }
         .summary-card { text-decoration:none; color:#0f172a; display:block; }
         .summary-card h3 { font-size:28px; margin:6px 0; font-weight:800; }
-        .chart-image { width:100%; max-width:500px; height:auto; border-radius:14px; border:1px solid #dbeafe; box-shadow:0 6px 14px rgba(0,0,0,0.05); }
+        .chart-image{width:100%; max-width:320px; height:auto; border-radius:14px; border:1px solid #dbeafe; box-shadow:0 6px 14px rgba(0,0,0,0.05); transition:all 0.3s ease; cursor:pointer; }
+        .chart-image:hover{ transform:scale(1.05); box-shadow:0 12px 24px rgba(0,0,0,0.12); }
         .next-page { text-align:center; margin-top:25px; }
         section { scroll-margin-top: 95px; }
         footer { background:white; border-top:1px solid #dee2e6; text-align:center; padding:0.8rem; margin-top:2rem; font-size:0.75rem; color:#64748b; }
@@ -225,15 +227,17 @@
                 <h2><i class="fas fa-database"></i> Sumber Data</h2>
                 <p class="desc">Data yang digunakan berasal dari publikasi resmi pemerintah Indonesia.</p>
                 <div class="btn-group-custom">
-                    <a href="https://www.bps.go.id/id/publication/2025/10/10/813a93c914774472acbe550f/konsumsi-kalori-dan-protein-penduduk-indonesia-dan-provinsi-maret-2025.html" target="_blank" class="btn-one"><i class="fas fa-database"></i> BPS</a>
-                    <a href="https://www.badankebijakan.kemkes.go.id/ski-2023-dalam-angka/" target="_blank" class="btn-two"><i class="fas fa-heartbeat"></i> Kemenkes</a>
+                    <a href="https://www.bps.go.id/id/publication/2023/10/20/bc49f9e37fe51852b8b0115c/konsumsi-kalori-dan-protein-penduduk-indonesia-dan-provinsi-maret-2023.html" target="_blank" class="btn-one"><i class="fas fa-database"></i> BPS-Konsumsi Kalori dan Protein 2023</a>
+                    <a href="https://www.bps.go.id/id/publication/2024/10/18/0f1f22aa7dcc5363d5b55f89/konsumsi-kalori-dan-protein-penduduk-indonesia-dan-provinsi-maret-2024.html" target="_blank" class="btn-one"><i class="fas fa-database"></i> BPS-Konsumsi Kalori dan Protein 2024</a>
+                    <a href="https://www.bps.go.id/id/publication/2025/10/10/813a93c914774472acbe550f/konsumsi-kalori-dan-protein-penduduk-indonesia-dan-provinsi-maret-2025.html" target="_blank" class="btn-one"><i class="fas fa-database"></i> BPS-Konsumsi Kalori dan Protein 2025</a>
+                    <a href="https://www.badankebijakan.kemkes.go.id/ski-2023-dalam-angka/" target="_blank" class="btn-two"><i class="fas fa-heartbeat"></i> Kemenkes-SKI 2023</a>
                 </div>
             </div>
         </section>
 
         <section id="ringkasan">
             <div class="card">
-                <h2><i class="fas fa-chart-pie"></i> Ringkasan Pulau Jawa</h2>
+                <h2><i class="fas fa-chart-pie"></i> Ringkasan Pulau Jawa Tahun 2025</h2>
                 <div class="row g-3 my-3">
                     <div class="col-md-4"><div class="card-stat text-center p-3"><i class="fas fa-fire fs-1"></i><div class="angka-besar angka-kalori">2.058</div><p>Rata-rata Kalori (kkal/hari)</p></div></div>
                     <div class="col-md-4"><div class="card-stat text-center p-3"><i class="fas fa-egg fs-1"></i><div class="angka-besar angka-protein">61,8</div><p>Rata-rata Protein (gram/hari)</p></div></div>
@@ -242,29 +246,48 @@
             </div>
         </section>
 
-        <section id="visualisasi">
-            <div class="card">
-                <h2><i class="fas fa-chart-line"></i> Visualisasi Status Gizi Nasional</h2>
-                <div class="row justify-content-center">
-                    <div class="col-md-8 text-center">
-                        <img src="Prevalensi IMT.jpg" class="chart-image" alt="Prevalensi IMT" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Prevalensi+IMT'">
-                        <p class="desc mt-2"><i class="fas fa-database"></i> Prevalensi IMT berdasarkan SKI 2023</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+<section id="visualisasi">
+  <div class="card">
+    <h2><i class="fas fa-chart-line"></i> Visualisasi Analisis Gizi tahun 2023-2025</h2>
+
+    <div class="row g-3 justify-content-center">
+
+      <!-- GAMBAR 1 -->
+      <div class="col-md-4 text-center">
+        <img src="Grafik Kalori 23-25.png" class="chart-image" alt="Chart 1"
+        onerror="this.src='https://placehold.co/400x300/e2e8f0/1e293b?text=Chart+1'">
+        <p class="desc mt-2"><strong>Konsumsi Kalori</strong></p>
+      </div>
+
+      <!-- GAMBAR 2 -->
+      <div class="col-md-4 text-center">
+        <img src="Grafik Protein 23-25.png" class="chart-image" alt="Chart 2"
+        onerror="this.src='https://placehold.co/400x300/e2e8f0/1e293b?text=Chart+2'">
+        <p class="desc mt-2"><strong>Konsumsi Protein</strong></p>
+      </div>
+
+      <!-- GAMBAR 3 -->
+      <div class="col-md-4 text-center">
+        <img src="Grafik Prevalensi IMT.png" class="chart-image" alt="Chart 3"
+        onerror="this.src='https://placehold.co/400x300/e2e8f0/1e293b?text=Chart+3'">
+        <p class="desc mt-2"><strong>Status Gizi</strong></p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
         <section id="interpretasi">
             <div class="card">
                 <h2><i class="fas fa-comment"></i> Interpretasi Data</h2>
-                <p class="desc">Gambaran gizi masyarakat Indonesia saat ini secara rata-rata, setiap orang sudah mendapatkan asupan energi sebesar 2.073,43 kkal dan protein sebanyak 62,78 gram setiap harinya. Angka ini sebenarnya sudah memenuhi standar dasar untuk tubuh bisa bergerak aktif. Namun, tantangannya terlihat dari hasilnya, baru sekitar 54,4% masyarakat yang memiliki status gizi normal. Ini artinya, meskipun secara angka jumlah makanannya terlihat sudah cukup, masih ada separuh populasi gizinya belum ideal.</p>
+                <p class="desc">Terlihat adanya kondisi gizi yang memerlukan perhatian khusus. Pada tahun 2025, rata-rata asupan masyarakat di Pulau Jawa tercatat sebesar 2.058 kkal untuk kalori dan 61,8 gram untuk protein per hari. Meski angka tersebut masih berada dalam kisaran standar kecukupan, hanya 54,4% penduduk yang memiliki status gizi normal. Hal ini mengisyaratkan bahwa hampir separuh populasi lainnya masih menghadapi permasalahan gizi, baik itu gizi kurang maupun gizi lebih. Data menunjukkan penurunan konsumsi baik pada asupan kalori maupun protein yang cukup tajam selama tiga tahun terakhir. Penurunan paling signifikan terjadi antara tahun 2023 ke 2024, yang kemudian terus melandai hingga tahun 2025.</p>
             </div>
         </section>
 
         <section id="kesimpulan">
             <div class="card">
                 <h2><i class="fas fa-flag-checkered"></i> Kesimpulan</h2>
-                <p class="desc">Masalah kita bukan lagi sekadar kekurangan makanan secara jumlah, melainkan tentang kualitas dan pemerataan. Tantangan ke depan adalah bagaimana memastikan asupan yang sudah 'cukup' secara angka tersebut benar-benar berkualitas dan bisa dinikmati secara merata oleh seluruh lapisan masyarakat agar angka status gizi normal bisa terus meningkat.</p>
+                <p class="desc">Kondisi gizi di Pulau Jawa menunjukkan tren yang mengkhawatirkan karena adanya penurunan konsumsi nutrisi dalam tiga tahun terakhir. Meskipun angka asupan harian saat ini tampak mencukupi, rendahnya angka status gizi normal yang hanya menyentuh 54,4% menegaskan bahwa distribusi dan kualitas pemenuhan gizi belum merata.</p>
             </div>
         </section>
 
@@ -280,7 +303,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Highlight menu aktif saat scroll (sama seperti di halaman analisis)
+    // Highlight menu aktif saat scroll
     const sections = document.querySelectorAll('section');
     const menuItems = document.querySelectorAll('.menu-item');
     
