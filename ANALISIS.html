@@ -7,10 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:#f0f4f9; font-family:'Inter',sans-serif; scroll-behavior:smooth; }
-        /* NAVBAR */
         .navbar { position: sticky; top:0; z-index:1000; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: linear-gradient(135deg, #0a2b4e 0%, #0f3b6f 100%); border-bottom: 4px solid #eab308; flex-wrap: wrap; gap:8px; }
         .logo-area { display: flex; align-items: center; gap:10px; }
         .logo-icon { background: rgba(255,255,255,0.2); padding:6px; border-radius:10px; font-size:1rem; }
@@ -21,9 +21,7 @@
         .nav-link i { font-size:0.8rem; }
         .nav-link:hover { background:rgba(255,255,255,0.12); transform:translateY(-1px); color:white; }
         .nav-link.active { background:rgba(234,179,8,0.2); color:#facc15; }
-        /* LAYOUT UTAMA */
         .main-container { max-width:1280px; margin:0 auto; padding:30px 20px; display:flex; gap:25px; align-items:flex-start; }
-        /* SIDEBAR DESKTOP: vertikal sticky */
         .sidebar-card { background:white; border-radius:1.25rem; box-shadow:0 8px 24px rgba(0,0,0,0.05); padding:1.25rem; position:sticky; top:90px; flex:0 0 270px; align-self:flex-start; }
         .menu-item { display:flex; align-items:center; gap:12px; padding:0.65rem 1rem; margin-bottom:0.5rem; border-radius:0.75rem; text-decoration:none; color:#1e293b; font-weight:500; transition:all 0.2s; white-space:nowrap; }
         .menu-item i { width:24px; font-size:1.1rem; color:#3b82f6; text-align:center; }
@@ -32,7 +30,6 @@
         .menu-item.active i { color:white; }
         .sidebar-card hr { margin:1rem 0; border-color:#e9eef3; }
         .sidebar-card .small { font-size:0.75rem; color:#475569; }
-        /* KONTEN UTAMA */
         .content-area { flex:1; min-width:0; }
         .hero { background: linear-gradient(135deg, #0a2b4e, #1e40af); color: white; padding: 40px 25px; border-radius: 20px; margin-bottom: 25px; }
         .hero h1 { font-size: 2rem; line-height:1.3; margin-bottom: 12px; font-weight:700; }
@@ -54,85 +51,31 @@
         .plot-img:hover { transform:scale(1.01); }
         footer { background:white; border-top:1px solid #dee2e6; text-align:center; padding:0.8rem; margin-top:2rem; font-size:0.75rem; color:#64748b; }
         section { scroll-margin-top: 95px; }
-
-        /* ======= RESPONSIF: MOBILE (≤ 900px) dengan side navbar horizontal, ramping, sticky ======= */
+        .accordion-button:not(.collapsed) { background-color: #eef2ff; color: #1e40af; font-weight: 600; }
+        .accordion-button:focus { box-shadow: none; border-color: #dee2e6; }
+        .accordion-body h5 { font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.8rem; }
+        canvas { max-width: 100%; height: auto; display: block; margin: 0 auto; background: white; border-radius: 8px; padding: 5px; }
+        .legend-color { display: inline-block; width: 16px; height: 16px; border-radius: 50%; margin-right: 6px; }
         @media (max-width: 900px) {
             .main-container { flex-direction: column; padding: 15px 12px; gap: 12px; }
-            /* Sidebar horizontal ramping, sticky di bawah navbar */
-            .sidebar-card {
-                position: sticky;
-                top: 70px;
-                z-index: 99;
-                width: 100%;
-                padding: 0.5rem;
-                background: white;
-                border-radius: 30px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-                margin-bottom: 12px;
-                display: flex;
-                flex-direction: row;
-                overflow-x: auto;
-                gap: 6px;
-                white-space: nowrap;
-                scrollbar-width: thin;
-                align-items: center;
-            }
-            /* Sembunyikan judul, garis, teks kecil */
-            .sidebar-card .text-uppercase,
-            .sidebar-card hr,
-            .sidebar-card .small {
-                display: none;
-            }
-            /* Menu-item menjadi chip kecil */
-            .menu-item {
-                display: inline-flex;
-                margin-bottom: 0;
-                padding: 0.3rem 0.8rem;
-                white-space: nowrap;
-                gap: 6px;
-                font-size: 0.75rem;
-                background: #f8fafc;
-                border-radius: 30px;
-                transition: 0.2s;
-            }
-            .menu-item i {
-                width: 16px;
-                font-size: 0.75rem;
-                margin-right: 0;
-            }
-            .menu-item:hover {
-                background-color: #eef2ff;
-                transform: translateY(-1px);
-            }
-            /* Ubah scroll margin top agar section tidak tertutup navbar + sidebar sticky */
-            section {
-                scroll-margin-top: 140px;
-            }
+            .sidebar-card { position: sticky; top: 70px; width: 100%; padding: 0.5rem; background: white; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 12px; display: flex; flex-direction: row; overflow-x: auto; gap: 6px; white-space: nowrap; scrollbar-width: thin; align-items: center; }
+            .sidebar-card .text-uppercase, .sidebar-card hr, .sidebar-card .small { display: none; }
+            .menu-item { display: inline-flex; margin-bottom: 0; padding: 0.3rem 0.8rem; white-space: nowrap; gap: 6px; font-size: 0.75rem; background: #f8fafc; border-radius: 30px; transition: 0.2s; }
+            .menu-item i { width: 16px; font-size: 0.75rem; margin-right: 0; }
+            .menu-item:hover { background-color: #eef2ff; transform: translateY(-1px); }
+            section { scroll-margin-top: 140px; }
         }
-
-        /* HP kecil (≤576px) */
         @media (max-width: 576px) {
             .hero h1 { font-size: 1.5rem; }
             .card h2 { font-size: 1.2rem; }
             .navbar { padding: 8px 12px; }
             .logo-text h1 { font-size: 1rem; }
-            .logo-text p { font-size: 0.55rem; }
             .menu-item { padding: 0.25rem 0.7rem; font-size: 0.7rem; }
             .menu-item i { font-size: 0.7rem; width: 14px; }
-            section {
-                scroll-margin-top: 130px;
-            }
+            section { scroll-margin-top: 130px; }
         }
-
-        /* Tablet/desktop kecil tetap pakai sticky vertikal */
-        @media (max-width:768px) { 
-            .navbar { flex-direction:column; align-items:flex-start; } 
-            .hero h1 { font-size:30px; } 
-        }
-        @media (max-width:480px) { 
-            .hero h1 { font-size:24px; } 
-            .nav-link { padding:6px 12px; font-size:0.8rem; } 
-        } 
+        @media (max-width:768px) { .navbar { flex-direction:column; align-items:flex-start; } .hero h1 { font-size:30px; } }
+        @media (max-width:480px) { .hero h1 { font-size:24px; } .nav-link { padding:6px 12px; font-size:0.8rem; } }
     </style>
 </head>
 <body>
@@ -167,66 +110,112 @@
                 <p class="desc">Analisis berbasis data nasional untuk melihat status gizi masyarakat Indonesia di pulau jawa berdasarkan provinsi.</p>
             </div>
         </section>
+
         <section id="keseluruhan">
             <div class="card">
                 <h2><i class="fas fa-chart-pie"></i> Ringkasan Gizi Pulau Jawa</h2>
                 <div class="row g-3 my-3">
-                    <div class="col-md-4"><div class="card-stat text-center p-3"><i class="fas fa-fire fs-1"></i><div class="angka-besar angka-kalori">2.058</div><p>Rata-rata Kalori (kkal/hari)</p></div></div>
-                    <div class="col-md-4"><div class="card-stat text-center p-3"><i class="fas fa-egg fs-1"></i><div class="angka-besar angka-protein">61,8</div><p>Rata-rata Protein (gram/hari)</p></div></div>
+                    <div class="col-md-4"><div class="card-stat text-center p-3"><i class="fas fa-fire fs-1"></i><div class="angka-besar angka-kalori">2.083</div><p>Rata-rata Kalori (kkal/hari)</p></div></div>
+                    <div class="col-md-4"><div class="card-stat text-center p-3"><i class="fas fa-egg fs-1"></i><div class="angka-besar angka-protein">63,76</div><p>Rata-rata Protein (gram/hari)</p></div></div>
                     <div class="col-md-4"><div class="card-stat text-center p-3"><i class="fas fa-heartbeat fs-1"></i><div class="angka-besar angka-gizi">54,4%</div><p>Status Gizi Normal</p></div></div>
                 </div>
-                <h3 class="h6 fw-bold mt-3">Data per Provinsi (Tabel Statis)</h3>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="table-light"><tr><th>Provinsi</th><th>Kalori</th><th>Protein</th><th>% Kurang Gizi</th><th>Skor</th></tr></thead>
-                        <tbody>
-                            <tr><td>DKI Jakarta</td><td>2325</td><td>71,2</td><td>12,8%</td><td>88</td></tr>
-                            <tr><td>DI Yogyakarta</td><td>2210</td><td>67,5</td><td>14,5%</td><td>84</td></tr>
-                            <tr><td>Jawa Timur</td><td>2120</td><td>63,9</td><td>18,2%</td><td>77</td></tr>
-                            <tr><td>Jawa Tengah</td><td>2005</td><td>59,3</td><td>24,7%</td><td>70</td></tr>
-                            <tr><td>Jawa Barat</td><td>1968</td><td>57,1</td><td>27,4%</td><td>66</td></tr>
-                            <tr><td>Banten</td><td>1880</td><td>54,6</td><td>30,1%</td><td>62</td></tr>
-                        </tbody>
-                    </table>
+                <h3 class="h6 fw-bold mt-3">Grafik Bar Kalori & Protein per Provinsi (2023–2025)</h3>
+                <div class="row g-4 mt-2">
+                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center"><i class="fas fa-fire text-danger"></i> Asupan Kalori (kkal/hari)</h5><img src="kalori2023-2025.jpeg" alt="Bar chart kalori" class="plot-img" onerror="this.src='https://placehold.co/600x400/f0f4f9/1e40af?text=Bar+Chart+Kalori'"><p class="small text-center text-muted mt-2">Sumber: BPS 2023-2025</p></div></div>
+                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center"><i class="fas fa-egg text-primary"></i> Asupan Protein (gram/hari)</h5><img src="protein2023-2025.jpeg" alt="Bar chart protein" class="plot-img" onerror="this.src='https://placehold.co/600x400/f0f4f9/1e40af?text=Bar+Chart+Protein'"><p class="small text-center text-muted mt-2">Sumber: BPS 2023-2025</p></div></div>
                 </div>
-                <h3 class="h6 fw-bold mt-4">Visualisasi Scatter Plot</h3>
-                <div class="row g-4">
-                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center">Kalori vs Kurang Gizi</h5><img src="Scatter Plot Kalori.png " class="plot-img" alt="Scatter Kalori" onerror="this.src='https://placehold.co/600x400/f0f4f9/64748b?text=Scatter+Kalori'"><p class="small text-center mt-2">r = -0,87</p></div></div>
-                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center">Protein vs Kurang Gizi</h5><img src="Scatter Plot Protein.png" class="plot-img" alt="Scatter Protein" onerror="this.src='https://placehold.co/600x400/f0f4f9/64748b?text=Scatter+Protein'"><p class="small text-center mt-2">r = -0,84</p></div></div>
-                </div>
-                <p class="mt-2 text-secondary">Berkorelasi negatif ekstrem</p>
             </div>
         </section>
+
+        <!-- ========== BAGIAN PER PROVINSI DENGAN LINE CHART & DOUGHNUT CHART 4 KATEGORI ========== -->
         <section id="perprovinsi">
             <div class="card">
-                <h2><i class="fas fa-city"></i> Analisis Per Provinsi (Boxplot)</h2>
-                <div class="row g-4">
-                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center">Boxplot Distribusi Kalori</h5><img src="Boxplot of Kalori.png" class="plot-img" alt="Boxplot Kalori" onerror="this.src='https://placehold.co/600x400/f0f4f9/64748b?text=Boxplot+Kalori'"></div></div>
-                    <div class="col-md-6"><div class="border rounded-3 p-2 bg-light h-100"><h5 class="text-center">Boxplot Distribusi Protein</h5><img src="Boxplot of Protein.png" class="plot-img" alt="Boxplot Protein" onerror="this.src='https://placehold.co/600x400/f0f4f9/64748b?text=Boxplot+Protein'"></div></div>
+                <h2><i class="fas fa-city"></i> Analisis Per Provinsi</h2>
+                <p class="desc mb-3">Klik pada setiap provinsi untuk melihat tren konsumsi (2023-2025) dan proporsi IMT berdasarkan SKI 2023.</p>
+                <div class="accordion" id="accordionProvinsi">
+                    <!-- DKI Jakarta -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov1"><i class="fas fa-map-marker-alt me-2 text-primary"></i> DKI Jakarta</button></h2>
+                        <div id="prov1" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                            <div class="accordion-body">
+                                <div class="row"><div class="col-md-6"><canvas id="lineKalori1" style="width:100%; height:200px"></canvas></div><div class="col-md-6"><canvas id="lineProtein1" style="width:100%; height:200px"></canvas></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut1" style="width:100%; height:200px"></canvas></div><div class="col-md-7">
+                                    <p><span class="legend-color" style="background:#f97316;"></span> Wasting: 6,4%</p>
+                                    <p><span class="legend-color" style="background:#16a34a;"></span> Normal: 45,6%</p>
+                                    <p><span class="legend-color" style="background:#eab308;"></span> Overweight: 16,2%</p>
+                                    <p><span class="legend-color" style="background:#dc2626;"></span> Obesitas: 31,8%</p>
+                                    <p class="small text-muted">Sumber: Survei Kesehatan Indonesia (SKI) 2023, Kemenkes.</p>
+                                </div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Jawa Barat -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov2"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Jawa Barat</button></h2>
+                        <div id="prov2" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                            <div class="accordion-body">
+                                <div class="row"><div class="col-md-6"><canvas id="lineKalori2"></canvas></div><div class="col-md-6"><canvas id="lineProtein2"></canvas></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut2"></canvas></div><div class="col-md-7"><p>Wasting: 8,6%</p><p>Normal: 51,7%</p><p>Overweight: 14,1%</p><p>Obesitas: 25,7%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Jawa Tengah -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov3"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Jawa Tengah</button></h2>
+                        <div id="prov3" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                            <div class="accordion-body">
+                                <div class="row"><div class="col-md-6"><canvas id="lineKalori3"></canvas></div><div class="col-md-6"><canvas id="lineProtein3"></canvas></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut3"></canvas></div><div class="col-md-7"><p>Wasting: 9,0%</p><p>Normal: 54,9%</p><p>Overweight: 13,5%</p><p>Obesitas: 22,5%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DI Yogyakarta -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov4"><i class="fas fa-map-marker-alt me-2 text-primary"></i> DI Yogyakarta</button></h2>
+                        <div id="prov4" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                            <div class="accordion-body">
+                                <div class="row"><div class="col-md-6"><canvas id="lineKalori4"></canvas></div><div class="col-md-6"><canvas id="lineProtein4"></canvas></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut4"></canvas></div><div class="col-md-7"><p>Wasting: 9,3%</p><p>Normal: 51,7%</p><p>Overweight: 14,4%</p><p>Obesitas: 24,6%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Jawa Timur -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov5"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Jawa Timur</button></h2>
+                        <div id="prov5" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                            <div class="accordion-body">
+                                <div class="row"><div class="col-md-6"><canvas id="lineKalori5"></canvas></div><div class="col-md-6"><canvas id="lineProtein5"></canvas></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut5"></canvas></div><div class="col-md-7"><p>Wasting: 7,9%</p><p>Normal: 52,9%</p><p>Overweight: 14,8%</p><p>Obesitas: 24,4%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Banten -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#prov6"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Banten</button></h2>
+                        <div id="prov6" class="accordion-collapse collapse" data-bs-parent="#accordionProvinsi">
+                            <div class="accordion-body">
+                                <div class="row"><div class="col-md-6"><canvas id="lineKalori6"></canvas></div><div class="col-md-6"><canvas id="lineProtein6"></canvas></div></div>
+                                <div class="row mt-4"><div class="col-md-5"><canvas id="doughnut6"></canvas></div><div class="col-md-7"><p>Wasting: 8,2%</p><p>Normal: 54,9%</p><p>Overweight: 13,3%</p><p>Obesitas: 23,6%</p><p class="small text-muted">Sumber: SKI 2023</p></div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="mt-3 text-secondary">Boxplot menggambarkan sebaran konsumsi kalori dan protein antar provinsi di Pulau Jawa. Banten sebagai nilai ekstrem.</p>
             </div>
         </section>
+
+        <!-- Ranking & Rekomendasi (dihitung ulang) -->
         <section id="ranking">
             <div class="card">
                 <h2><i class="fas fa-trophy"></i> Peringkat Keseimbangan Gizi</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
-                        <thead class="table-dark"><tr><th>Peringkat</th><th>Provinsi</th><th>Skor</th><th>Kalori</th><th>Protein</th><th>% Kurang Gizi</th></tr></thead>
-                        <tbody>
-                            <tr><td>1</td><td>DKI Jakarta</td><td>88</td><td>2325</td><td>71,2</td><td>12,8%</td></tr>
-                            <tr><td>2</td><td>DIY Yogyakarta</td><td>84</td><td>2210</td><td>67,5</td><td>14,5%</td></tr>
-                            <tr><td>3</td><td>Jawa Timur</td><td>77</td><td>2120</td><td>63,9</td><td>18,2%</td></tr>
-                            <tr><td>4</td><td>Jawa Tengah</td><td>70</td><td>2005</td><td>59,3</td><td>24,7%</td></tr>
-                            <tr><td>5</td><td>Jawa Barat</td><td>66</td><td>1968</td><td>57,1</td><td>27,4%</td></tr>
-                            <tr><td>6</td><td>Banten</td><td>62</td><td>1880</td><td>54,6</td><td>30,1%</td></tr>
-                        </tbody>
+                        <thead class="table-dark"><tr><th>Peringkat</th><th>Provinsi</th><th>Skor Gizi</th><th>Kalori (2025)</th><th>Protein (2025)</th><th>% Gizi Normal</th><th>Saran</th></tr></thead>
+                        <tbody id="rankingBody"></tbody>
                     </table>
                 </div>
                 <div class="bg-light p-3 rounded-3 mt-3">
                     <h6><i class="fas fa-flag-checkered text-primary"></i> Kesimpulan & Rekomendasi</h6>
-                    <p>Provinsi dengan skor rendah (Banten, Jawa Barat, Jawa Tengah) perlu intervensi prioritas: PMT protein hewani, fortifikasi, edukasi "Isi Piringku".</p>
-                    <p>Provinsi dengan skor menengah hingga tinggi (Jawa Timur, Daerah Istimewa Yogyakarta, DKI Jakarta) perlu monitoring untuk menjaga stabilitas tingkat gizi dan menekan persentase gizi buruk.</p>
+                    <p>Skor dihitung berdasarkan persentase Normal dikurangi bobot Wasting dan Obesitas. Provinsi dengan skor rendah perlu intervensi prioritas.</p>
                 </div>
             </div>
         </section>
@@ -236,33 +225,112 @@
     </div>
 </div>
 <footer><small>© 2026 - Pemrograman Web 2B Kelompok 8 | Data BPS & Kemenkes</small></footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Data Kalori & Protein per provinsi (2023,2024,2025) dari gambar user
+    const provData = [
+        { name:"DKI Jakarta", kalori:[2150,2050,2080], protein:[70.0,68.0,68.0] },
+        { name:"Jawa Barat",  kalori:[2110,2070,2080], protein:[63.0,62.0,63.5] },
+        { name:"Jawa Tengah", kalori:[2040,1980,2030], protein:[59.8,59.5,60.2] },
+        { name:"DI Yogyakarta",kalori:[2060,2010,2050], protein:[63.5,62.5,64.8] },
+        { name:"Jawa Timur",  kalori:[2060,2050,2090], protein:[60.5,60.5,62.0] },
+        { name:"Banten",      kalori:[2210,2180,2140], protein:[67.0,66.0,65.0] }
+    ];
+    // Data IMT 4 kategori (Wasting, Normal, Overweight, Obesitas) dari SKI 2023
+    const imtData = [
+        { wasting:6.4, normal:45.6, overweight:16.2, obesitas:31.8 },
+        { wasting:8.6, normal:51.7, overweight:14.1, obesitas:25.7 },
+        { wasting:9.0, normal:54.9, overweight:13.5, obesitas:22.5 },
+        { wasting:9.3, normal:51.7, overweight:14.4, obesitas:24.6 },
+        { wasting:7.9, normal:52.9, overweight:14.8, obesitas:24.4 },
+        { wasting:8.2, normal:54.9, overweight:13.3, obesitas:23.6 }
+    ];
+    const tahun = ['2023','2024','2025'];
 
+    // Fungsi line chart
+    function buatLineChart(id, data, label, warna) {
+        let ctx = document.getElementById(id);
+        if (!ctx) return;
+        new Chart(ctx, {
+            type: 'line',
+            data: { labels: tahun, datasets: [{ label: label, data: data, borderColor: warna, backgroundColor: 'rgba(59,130,246,0.1)', tension: 0.2, fill: true, pointBackgroundColor: warna }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top' } } }
+        });
+    }
+    // Fungsi doughnut chart 4 kategori
+    function buatDoughnutChart(id, wasting, normal, overweight, obesitas) {
+        let ctx = document.getElementById(id);
+        if (!ctx) return;
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: { labels: ['Wasting', 'Normal', 'Overweight', 'Obesitas'], datasets: [{ data: [wasting, normal, overweight, obesitas], backgroundColor: ['#f97316', '#16a34a', '#eab308', '#dc2626'], borderWidth: 0 }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 9 } } } } }
+        });
+    }
+
+    // Inisialisasi semua chart
+    for (let i=0; i<provData.length; i++) {
+        let idx = i+1;
+        buatLineChart(`lineKalori${idx}`, provData[i].kalori, 'Kalori (kkal)', '#f97316');
+        buatLineChart(`lineProtein${idx}`, provData[i].protein, 'Protein (gram)', '#1e3a8a');
+        buatDoughnutChart(`doughnut${idx}`, imtData[i].wasting, imtData[i].normal, imtData[i].overweight, imtData[i].obesitas);
+    }
+
+    // Hitung ranking berdasarkan skor IMT (normal - (wasting*0.3 + obesitas*0.5))
+    let rankingList = [];
+    for (let i=0; i<provData.length; i++) {
+        let skor = imtData[i].normal - (imtData[i].wasting * 0.3 + imtData[i].obesitas * 0.5);
+        rankingList.push({
+            provinsi: provData[i].name,
+            skor: skor,
+            normal: imtData[i].normal,
+            kalori2025: provData[i].kalori[2],
+            protein2025: provData[i].protein[2],
+            wasting: imtData[i].wasting,
+            obesitas: imtData[i].obesitas
+        });
+    }
+    rankingList.sort((a,b) => b.skor - a.skor);
+    let tbody = '';
+    for (let i=0; i<rankingList.length; i++) {
+        let r = rankingList[i];
+        let saran = "";
+        if (r.normal >= 54) saran = "Status gizi cukup baik, pertahankan edukasi pola makan seimbang.";
+        else if (r.wasting > 9) saran = "Prioritas intervensi gizi buruk (wasting tinggi).";
+        else if (r.obesitas > 25) saran = "Kampanye pengendalian obesitas dan aktivitas fisik.";
+        else if (r.kalori2025 < 2000) saran = "Tingkatkan asupan energi dan protein hewani.";
+        else if (r.protein2025 < 62) saran = "Perbaiki kualitas protein (sumber hewani).";
+        else saran = "Monitoring rutin dan promosi Isi Piringku.";
+        tbody += `<tr>
+            <td>${i+1}</td>
+            <td>${r.provinsi}</td>
+            <td>${r.skor.toFixed(1)}</td>
+            <td>${r.kalori2025}</td>
+            <td>${r.protein2025}</td>
+            <td>${r.normal}%</td>
+            <td>${saran}</td>
+        </tr>`;
+    }
+    document.getElementById('rankingBody').innerHTML = tbody;
+
+    // Active menu highlight
     const sections = document.querySelectorAll('section');
     const menuItems = document.querySelectorAll('.menu-item');
-    
     function changeActiveMenu() {
         let current = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop - 100;
             const sectionBottom = sectionTop + section.offsetHeight;
-            if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
-                current = section.getAttribute('id');
-            }
+            if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) current = section.getAttribute('id');
         });
         menuItems.forEach(item => {
             item.classList.remove('active');
-            const href = item.getAttribute('href');
-            if (href === `#${current}`) {
-                item.classList.add('active');
-            }
+            if (item.getAttribute('href') === `#${current}`) item.classList.add('active');
         });
     }
-    
     window.addEventListener('scroll', changeActiveMenu);
     window.addEventListener('load', changeActiveMenu);
-
     document.querySelectorAll('.menu-item').forEach(link => {
         link.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
